@@ -28,13 +28,12 @@ stage : rel
 	rm -rf wiki_creole-* eduspider-* && \
 	ln -s ../../../lib/wiki_creole && \
 	ln -s ../../../lib/eduspider_web && \
-	ln -s ../../../lib/eduspider_core
 
 test:
 	./rebar skip_deps=true eunit
 
 console:
-	exec erl -sname eduspider -pa $(PWD)/lib/*/ebin -boot start_sasl -config gen/files/sys.config  -s reloader -s eduspider_web -s eduspider_core
+	erl -sname eduspider -pa $(PWD)/lib/*/ebin -boot start_sasl -config gen/files/sys.config  -s reloader -s eduspider_web
 
 webstart: all console
 

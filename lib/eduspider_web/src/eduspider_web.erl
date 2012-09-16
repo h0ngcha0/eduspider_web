@@ -33,16 +33,12 @@ dependent_applications() ->
   , compiler
   , syntax_tools
   , lager
-  , pooler
   , public_key
   , ssl
   , inets
   , webmachine
   , erlydtl
   , wiki_creole
-  , riakc
-  , ibrowse
-  , riakhttpc
   , lhttpc
   ].
 
