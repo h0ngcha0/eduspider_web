@@ -42,9 +42,6 @@
          history/0]).
 -export([has_multiple/0, tip_versions/0, selected_version/0]).
 
-%% FIXME: perhaps we can remove this
--include("../../../lib/eduspider_core/include/eduspider_core.hrl").
-
 %% @type article_props() = proplist()
 %% @type history_props() = proplist()
 %% @type version() = integer()
