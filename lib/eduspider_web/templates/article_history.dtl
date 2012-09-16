@@ -1,0 +1,53 @@
+{% extends "article.dtl" %}
+{#
+ # -------------------------------------------------------------------
+ #
+ # Copyright (c) 2009-2010 Basho Technologies, Inc.  All Rights Reserved.
+ #
+ # This file is provided to you under the Apache License,
+ # Version 2.0 (the "License"); you may not use this file
+ # except in compliance with the License.  You may obtain
+ # a copy of the License at
+ #
+ #   http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing,
+ # software distributed under the License is distributed on an
+ # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ # KIND, either express or implied.  See the License for the
+ # specific language governing permissions and limitations
+ # under the License.
+ #
+ # -------------------------------------------------------------------
+ #}
+{% block article_content %}
+  <h2>Known versions of &quot;{{ article.key_urldecoded|escape }}&quot;</h2>
+  <form action="{{ article.path }}" method="GET">
+    <table>
+      <thead>
+        <tr>
+          <th>l</th>
+          <th>r</th>
+          <th>version</th>
+          <th>time</th>
+          <th>editor</th>
+          <th>message</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ver in article.history %}
+        <tr>
+          <td><input type="radio" name="l" value="{{ ver.version }}"{% if forloop.first %} checked="checked"{% endif %} /></td>
+          <td><input type="radio" name="r" value="{{ ver.version }}"{% ifequal forloop.counter 2 %} checked="checked"{% endifequal %} /></td>
+          <td><a href="{{ article.path }}?v={{ver.version}}">{{ ver.version }}</a></td>
+          <td>{{ ver.time }}</td>
+          <td>{% if ver.editor %}<a href="/user/{{ ver.editor|urlencode }}">{{ ver.editor|escape }}</a>{% endif %}</td>
+          <td>{% if ver.msg %}{{ ver.msg|escape }}{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <input type="hidden" name="diff" />
+    <button type="submit">diff selected versions</button>
+  </form>
+{% endblock %}

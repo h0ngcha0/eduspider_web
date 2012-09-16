@@ -1,0 +1,21 @@
+{ application
+, eduspider_web
+, [ {description, "eduspider web"}
+  , {vsn, "0.0.1"}
+  , {registered, []}
+  , {applications, [ kernel
+                   , stdlib
+                   , webmachine
+                   , erlydtl
+                   , wiki_creole
+                   , riakc
+                   , riakhttpc
+                   , crypto
+                   , public_key
+                   , ssl
+                   , inets
+                   , lager
+                   ]}
+  , {mod, { eduspider_web_app, []}}
+  , {env, []}
+ ]}.
