@@ -65,7 +65,7 @@ finish_request(RD, Ctx) ->
 
 %% authorize a user
 authorize(#ctx{user = User} = Ctx) ->
-  ok = user_fe:store(user_fe:set_login_time(User, now())),
+  {ok, _} = user_fe:store(user_fe:set_login_time(User, now())),
   Ctx#ctx{authorized = true}.
 
 %% always make a new object from the newly fetched data
