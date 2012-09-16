@@ -27,6 +27,9 @@
         , store/2
         ]).
 
+%%%_* Include ==========================================================
+-include_lib("eduspider_web/include/eduspider_web.hrl").
+
 %%%_* Records ==========================================================
 %% article record
 -record(article, { key
@@ -43,7 +46,7 @@
 -type article()         :: #article{}.
 
 %%%_* Macros ===========================================================
--define(SM_SERVICE_BASE_URL,  "http://localhost:8642/api/sm").
+-define(SM_SERVICE_BASE_URL,  ?SERVICE_BASE_URL ++ "/api/sm").
 
 %%%_* Code =============================================================
 %% @doc create an article object @end

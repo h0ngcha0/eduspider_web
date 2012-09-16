@@ -32,12 +32,15 @@
               , photo
               }).
 
+%%%_* Include ==========================================================
+-include_lib("eduspider_web/include/eduspider_web.hrl").
+
 %%%_* Types ============================================================
 -type user()      :: #user{}.
 -type proplists() :: [{_, _}].
 
 %%%_* Macros ===========================================================
--define(USER_SERVICE_BASE_URL,  "http://localhost:8642/api/user").
+-define(USER_SERVICE_BASE_URL,  ?SERVICE_BASE_URL ++ "/api/user").
 
 %%%_* Code =============================================================
 %% @doc create a user record based on the proplist @end

@@ -8,8 +8,6 @@
                    , webmachine
                    , erlydtl
                    , wiki_creole
-                   , riakc
-                   , riakhttpc
                    , crypto
                    , public_key
                    , ssl

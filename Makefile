@@ -33,7 +33,7 @@ test:
 	./rebar skip_deps=true eunit
 
 console:
-	erl -sname eduspider -pa $(PWD)/lib/*/ebin -boot start_sasl -config gen/files/sys.config  -s reloader -s eduspider_web
+	erl -sname eduspider_web -pa $(PWD)/lib/*/ebin -boot start_sasl -config gen/files/sys.config  -s reloader -s eduspider_web
 
 webstart: all console
 

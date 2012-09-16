@@ -18,6 +18,9 @@
         , set_version/2
         ]).
 
+%%%_* Include ==========================================================
+-include_lib("eduspider_web/include/eduspider_web.hrl").
+
 %%%_* Records ==========================================================
 -record(version_summary, { version
                          , timestamp
@@ -29,7 +32,7 @@
 -type version_summary() :: #version_summary{}.
 
 %%%_* Macros ===========================================================
--define(SM_VS_SERVICE_BASE_URL,  "http://localhost:8642/api/sm_vs").
+-define(SM_VS_SERVICE_BASE_URL,  ?SERVICE_BASE_URL ++ "/api/sm_vs").
 
 %%%_* Code =============================================================
 -spec get_editor(version_summary()) -> Editor :: binary().
