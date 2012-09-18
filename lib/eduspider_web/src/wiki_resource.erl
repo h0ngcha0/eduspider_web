@@ -116,13 +116,13 @@ get_username(RD) ->
   end.
 
 resource_exists(RD, Ctx) ->
-    Key = search_path(RD),
-    case article_fe:fetch(Key) of
-        {ok, ArticleVs}   ->
-            {true, RD, select_version(RD, Ctx#ctx{article_vs=ArticleVs})};
-        {error, notfound} ->
-            {false, RD, Ctx}
-    end.
+  Key = search_path(RD),
+  case article_fe:fetch(Key) of
+    {ok, ArticleVs}   ->
+      {true, RD, select_version(RD, Ctx#ctx{article_vs=ArticleVs})};
+    {error, notfound} ->
+      {false, RD, Ctx}
+  end.
 
 select_version(RD, Ctx) ->
     case wrq:get_qs_value("v", RD) of
@@ -241,21 +241,21 @@ search_path(RD) ->
     base64url:encode(mochiweb_util:unquote(wrq:disp_path(RD))).
 
 finish_request(RD, Ctx) ->
-    case wrq:response_code(RD) of
-        404 ->
-            {Content, NewRD, NewCtx} =
-                case in_mode(RD, ?MODE_EDIT) of
-                    true  -> render_404_editor(RD, Ctx);
-                    false -> render_404(RD, Ctx)
-                end,
-            {true,
-             wrq:set_resp_header(
-               "Content-type", "text/html; charset=utf-8",
-               wrq:set_resp_body(Content, NewRD)),
-             NewCtx};
-        _ ->
-            {true, RD, Ctx}
-    end.
+  case wrq:response_code(RD) of
+    404 ->
+      {Content, NewRD, NewCtx} =
+        case in_mode(RD, ?MODE_EDIT) of
+          true  -> render_404_editor(RD, Ctx);
+          false -> render_404(RD, Ctx)
+        end,
+      { true
+      , wrq:set_resp_header(
+              "Content-type", "text/html; charset=utf-8",
+               wrq:set_resp_body(Content, NewRD))
+      , NewCtx };
+    _ ->
+      {true, RD, Ctx}
+  end.
 
 render_404_editor(RD, Ctx) ->
     Article = article_fe:create(search_path(RD),
@@ -271,9 +271,9 @@ render_404_editor(RD, Ctx) ->
     to_html(RD, ACtx).
 
 render_404(RD, Ctx) ->
-    Search  = base64url:decode_to_string(search_path(RD)),
-    Results = study_material:search(Search),
-    {ok, C} = error_404_dtl:render([{req, wrq_dtl_helper:new(RD)},
-                                    {search, Search},
-                                    {results, Results}]),
-    {C, RD, Ctx}.
+  Search  = base64url:decode_to_string(search_path(RD)),
+  %% Results = study_material:search(Search),
+  {ok, C} = error_404_dtl:render([{req, wrq_dtl_helper:new(RD)},
+                                  {search, Search},
+                                  {results, []}]),
+  {C, RD, Ctx}.
