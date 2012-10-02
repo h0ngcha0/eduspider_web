@@ -38,7 +38,7 @@
           {% else %}
           <!-- if the user has not logged in, show the sign in button -->
           <ul class="nav pull-right">
-            <li><a href="#login"><i class="icon-exclamation-sign icon-white"></i> Sign in</a>
+            <li><a href="/login"><i class="icon-exclamation-sign icon-white"></i> Sign in</a>
             </li>
           </ul>
           {% endif %}

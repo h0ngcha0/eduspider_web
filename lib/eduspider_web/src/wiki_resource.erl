@@ -78,8 +78,8 @@ is_authorized(RD, Ctx) ->
 
 load_user(RD, Ctx=#ctx{user = undefined}) ->
   User =
-    case get_username(RD) of
-      [_|_] = Name ->
+    case eduspider_web_lib:get_username(RD) of
+      {ok, Name} ->
         Key = list_to_binary(Name),
         %% case eduspider_core_server:get_user(Key) of
         case user_fe:fetch(Key) of
@@ -95,7 +95,7 @@ load_user(RD, Ctx=#ctx{user = undefined}) ->
             lager:info("user ~p not found", [Name]),
             none
         end;
-      [] ->
+      false ->
         lager:info("bad cookie", []),
         none
     end,
@@ -106,14 +106,6 @@ load_user(RD, Ctx=#ctx{user = undefined}) ->
       Ctx#ctx{user = User}
   end;
 load_user(_, Ctx) -> Ctx.
-
-get_username(RD) ->
-  case eduspider_web_lib:has_good_cookies(RD) of
-    true ->
-      eduspider_web_lib:get_cookie_username(RD);
-    false ->
-      []
-  end.
 
 resource_exists(RD, Ctx) ->
   Key = search_path(RD),

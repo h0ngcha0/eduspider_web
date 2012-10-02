@@ -11,6 +11,7 @@
            fetch_resource/1
          , get_cookie_secret/1
          , get_cookie_username/1
+         , get_username/1
          , get_val/2
          , get_val/3
          , has_good_cookies/1
@@ -61,6 +62,19 @@ make_spider_cookie(Name, Value) ->
 
 get_cookie_username(RD) ->
   get_spider_cookie(RD, ?USERNAME).
+
+%% @doc Get the username from the cookie, if cookie is not valid
+%%      return false
+%% @end
+%% FIXME: what's the type of the webmachine request data?
+-spec get_username(term()) -> {ok, string()} | false.
+get_username(RD) ->
+  case eduspider_web_lib:has_good_cookies(RD) of
+    true ->
+      {ok, eduspider_web_lib:get_cookie_username(RD)};
+    false ->
+      false
+  end.
 
 get_cookie_secret(RD) ->
   get_spider_cookie(RD, ?SECRET).
