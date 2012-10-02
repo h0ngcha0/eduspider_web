@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <head>
+    <title>EduSpider</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/eduspider.css" />
+
+
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/static/js/underscore.min.js"></script>
+    <script type="text/javascript" src="/static/js/backbone.min.js"></script>
+    <script type="text/javascript" src="/static/js/prettify.js"></script>
+    <script type="text/javascript" src="/static/js/handlebars.js"></script>
+    <script type="text/javascript" src="/static/js/eduspider.js"></script>
+  </head>
+
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">EduSpider</a>
+        </div>
+      </div>
+    </div>
+    
+    <script type="text/javascript">
+      $(document).ready(function() {
+      alert("good");
+      });
+    </script>
+  </body>
+</html>
