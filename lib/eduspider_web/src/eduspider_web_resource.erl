@@ -18,7 +18,8 @@ init([]) ->
   {ok, undefined}.
 
 to_html(ReqData, State) ->
-  Params = [],
+  %% Params = [{user_name, "Hongchao"}],
+  Params = [{user_name, undefined}],
   {ok, Content} = home_dtl:render(Params),
   {Content, ReqData, State}.
 

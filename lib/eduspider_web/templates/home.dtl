@@ -21,15 +21,32 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
+          <!-- show the app name -->
           <a class="brand" href="#">EduSpider</a>
+          {% if user_name %}
+          <!-- if the user has logged in, create the logout button for this user -->
+          <ul class="nav pull-right">
+            <ul class="nav pull-right">
+              <li class="dropdown"><a href="#" data-toggle="dropdown" class="menu"><i class="icon-user icon-white"></i> {{ user_name }}
+              <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a class="logout" href="#">Logout</a></li>
+              </ul>
+              </li>
+            </ul>
+          </ul>
+          {% else %}
+          <!-- if the user has not logged in, show the sign in button -->
+          <ul class="nav pull-right">
+            <li><a href="#login"><i class="icon-exclamation-sign icon-white"></i> Sign in</a>
+            </li>
+          </ul>
+          {% endif %}
         </div>
       </div>
     </div>
-    
-    <script type="text/javascript">
-      $(document).ready(function() {
-      alert("good");
-      });
-    </script>
+
+    <div id="content" class="container">
+    </div>
   </body>
 </html>
