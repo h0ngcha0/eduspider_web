@@ -4,11 +4,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%_* Module declaration ===============================================
--module(eduspider_web_resource).
+-module(logout_resource).
 
 %%%_* Exports ==========================================================
--export([ init/1
-        , to_html/2
+-export([ allowed_methods/2
+        , init/1
+        , process_post/2
         ]).
 
 %%%_* Include ==========================================================
@@ -18,15 +19,13 @@
 init([]) ->
   {ok, undefined}.
 
-to_html(ReqData, State) ->
-  UsernameRes   = eduspider_web_lib:get_username(ReqData),
-  Username      = case UsernameRes of
-                    {ok, UserName0} -> UserName0;
-                    false          -> false
-                  end,
-  Params        = [{user_name, Username}],
-  {ok, Content} = home_dtl:render(Params),
-  {Content, ReqData, State}.
+allowed_methods(ReqData, State) ->
+  {['POST'], ReqData, State}.
+
+process_post(ReqData, State) ->
+    %% TODO: remove auth from cookie here...
+    %% NewReqData = remove_auth(ReqData),
+    {true, ReqData, State}.
 
 %%%_* Emacs ============================================================
 %%% Local Variables:
