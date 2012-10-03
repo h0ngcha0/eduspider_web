@@ -36,7 +36,7 @@ remove(RD) ->
 %% @doc try to retrieve the the value in the eduspider cookie @end
 load(RD) ->
   case wrq:get_cookie_value(?COOKIE_HEADER, RD) of
-    undefined -> false;
+    undefined -> {error, no_cookie};
     CookieVal -> decode(mochiweb_util:unquote(CookieVal))
   end.
 

@@ -78,25 +78,23 @@ is_authorized(RD, Ctx) ->
 
 load_user(RD, Ctx=#ctx{user = undefined}) ->
   User =
-    case eduspider_web_lib:get_username(RD) of
-      {ok, Name} ->
-        Key = list_to_binary(Name),
-        %% case eduspider_core_server:get_user(Key) of
-        case user_fe:fetch(Key) of
+    case eduspider_web_lib:get_userid(RD) of
+      {ok, UserIdBin} ->
+        UserId = binary_to_list(UserIdBin),
+        case user_fe:fetch(UserIdBin) of
           {ok, U} ->
             case user_fe:is_valid_session(U) of
               true ->
                 U;
               false ->
-                lager:info("~p session expired", [Name]),
+                lager:info("~p session expired", [UserId]),
                 none
             end;
           _ ->
-            lager:info("user ~p not found", [Name]),
+            lager:info("user ~p not found", [UserId]),
             none
         end;
       false ->
-        lager:info("bad cookie", []),
         none
     end,
   case User of

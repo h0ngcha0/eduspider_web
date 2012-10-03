@@ -24,7 +24,7 @@ allowed_methods(ReqData, State) ->
 
 process_post(ReqData, State) ->
   ct:pal("logout resource"),
-  NewReqData = eduspider_web_lib:remove_cookie(ReqData),
+  NewReqData = eduspider_web_cookie:remove(ReqData),
   {true, NewReqData, State}.
 
 %%%_* Emacs ============================================================

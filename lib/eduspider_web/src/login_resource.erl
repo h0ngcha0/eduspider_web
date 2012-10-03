@@ -29,11 +29,11 @@ init([]) ->
 
 to_html(RD, #ctx{appname = AppName} = Ctx) ->
   Username =
-    case eduspider_web_lib:get_cookie_username(RD) of
+    case eduspider_web_lib:get_userid(RD) of
       false ->
         "you are not logged in";
-      Cookie ->
-        ["current user: ", Cookie]
+      {ok, UserId} ->
+        ["current user: ", UserId]
     end,
   {ok, C} =
     login_dtl:render([ {AppName, AppName}
