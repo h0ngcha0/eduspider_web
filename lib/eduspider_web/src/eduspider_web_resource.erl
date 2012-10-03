@@ -19,12 +19,12 @@ init([]) ->
   {ok, undefined}.
 
 to_html(ReqData, State) ->
-  UsernameRes   = eduspider_web_lib:get_username(ReqData),
-  Username      = case UsernameRes of
-                    {ok, UserName0} -> UserName0;
-                    false          -> false
-                  end,
-  Params        = [{user_name, Username}],
+  UserIdRes = eduspider_web_lib:get_userid(ReqData),
+  UserId    = case UserIdRes of
+                {ok, UserId0} -> UserId0;
+                false          -> false
+              end,
+  Params        = [{user_name, UserId}],
   {ok, Content} = home_dtl:render(Params),
   {Content, ReqData, State}.
 
