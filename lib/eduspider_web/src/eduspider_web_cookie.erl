@@ -16,18 +16,18 @@
 -include_lib("eduspider_web/include/eduspider_web.hrl").
 
 %%%_* Macros ===========================================================
--define(COOKIE_HEADER, "__Eduspider_Cookie_Header").
--define(SALT,          eduspider_web:get_app_env(salt, "")).
--define(SECRET,        eduspider_web:get_app_env(secret, "")).
--define(SESSION_AGE,   eduspider_web:get_app_env( max_session_age
-                                                , ?default_session_age)).
+-define(COOKIE_HEADER,    "__Eduspider_Cookie_Header").
+-define(SALT,             eduspider_web:get_app_env(salt, "")).
+-define(SECRET,           eduspider_web:get_app_env(secret, "")).
+-define(SESSION_AGE_DAYS, eduspider_web:get_app_env( max_session_age
+                                                   , ?default_session_age)).
 
 %%%_* Code =============================================================
 %% FIXME: Just placeholder
 %% @doc store a value in the eduspider cookie @end
 store(Value, RD) ->
   EncodedVal = mochiweb_util:quote_plus(encode(Value)),
-  do_save(RD, EncodedVal, ?SESSION_AGE).
+  do_save(RD, EncodedVal, 3600 * 24 * ?SESSION_AGE_DAYS).
 
 %% @doc remove a value in the eduspider cookie @end
 remove(RD) ->
@@ -71,7 +71,7 @@ decode(CookieVal) ->
 get_expiry() ->
   {Date, Time} = calendar:local_time(),
   NewDate = calendar:gregorian_days_to_date(
-              calendar:date_to_gregorian_days(Date) + ?SESSION_AGE),
+              calendar:date_to_gregorian_days(Date) + ?SESSION_AGE_DAYS),
   {NewDate, Time}.
 %%%_* Emacs ============================================================
 %%% Local Variables:

@@ -20,13 +20,22 @@ init([]) ->
 
 to_html(ReqData, State) ->
   UserIdRes = eduspider_web_lib:get_userid(ReqData),
-  UserId    = case UserIdRes of
-                {ok, UserId0} -> UserId0;
-                false          -> false
+  UserName  = case UserIdRes of
+                {ok, UserId0} -> get_username(UserId0);
+                false         -> false
               end,
-  Params        = [{user_name, UserId}],
+  Params        = [{user_name, UserName}],
   {ok, Content} = home_dtl:render(Params),
   {Content, ReqData, State}.
+
+%%%_* Internal Functions ===============================================
+get_username(UserId) ->
+  case user_fe:fetch(UserId) of
+    {error, notfound} ->
+      false;
+    {ok, User}        ->
+      user_fe:get_email(User)
+  end.
 
 %%%_* Emacs ============================================================
 %%% Local Variables:
