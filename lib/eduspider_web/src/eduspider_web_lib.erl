@@ -7,13 +7,12 @@
 -module(eduspider_web_lib).
 
 %%%_* Exports ==========================================================
--export( [ fetch_resource/1
-         , get_userid/1
-         , http_request/3
-         , max_user_session_age/0
-         , lookup/2
-         ]
-       ).
+-export([ fetch_resource/1
+        , get_userid/1
+        , http_request/3
+        , max_user_session_age/0
+        , lookup/2
+        ]).
 
 %% -export([ fetch_fb_user_info/1
 %%         ]).

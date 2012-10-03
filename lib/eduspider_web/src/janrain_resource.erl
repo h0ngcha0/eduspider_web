@@ -44,7 +44,7 @@ process_post(RD, Ctx) ->
   case httpc:request(Query) of
     {ok, {{_, 200, _}, _Headers, Body}} ->
       {ok, User} = make_user(mochijson2:decode(Body)),
-      Ctx1 = authorize(Ctx#ctx{user = User}),
+      Ctx1   = authorize(Ctx#ctx{user = User}),
       UserId = user_fe:get_key(User),
       NewRD  = eduspider_web_cookie:store(UserId, RD),
       { {halt, 303}
