@@ -36,18 +36,17 @@ allow_missing_post(RD, Ctx) ->
 process_post(RD, Ctx) ->
   PostBody = mochiweb_util:parse_qs(wrq:req_body(RD)),
   Janrain  = eduspider_web:get_app_env(janrain, []),
-  Token    = eduspider_web_lib:opt(PostBody, "token"),
-  Url      = eduspider_web_lib:opt(Janrain, urlPrefix),
-  ApiKey   = eduspider_web_lib:opt(Janrain, apiKey),
+  Token    = eduspider_web_lib:lookup("token", PostBody),
+  Url      = eduspider_web_lib:lookup(urlPrefix, Janrain),
+  ApiKey   = eduspider_web_lib:lookup(apiKey, Janrain),
   Q        = [Url, "?apiKey=", ApiKey, "&token=", Token],
   Query    = lists:flatten(Q),
   case httpc:request(Query) of
     {ok, {{_, 200, _}, _Headers, Body}} ->
       {ok, User} = make_user(mochijson2:decode(Body)),
       Ctx1 = authorize(Ctx#ctx{user = User}),
-      UsernameCookie = eduspider_web_lib:make_cookie_username(User),
-      SecretCookie = eduspider_web_lib:make_cookie_secret(User),
-      NewRD  = wrq:merge_resp_headers([UsernameCookie, SecretCookie], RD),
+      UserId = user_fe:get_key(User),
+      NewRD  = eduspider_web_cookie:store(UserId, RD),
       { {halt, 303}
       , wrq:set_resp_header("Location", "/", NewRD)
       , Ctx1
@@ -71,8 +70,8 @@ authorize(#ctx{user = User} = Ctx) ->
 %% always make a new object from the newly fetched data
 %% i.e. we never store any persistent data in wuser object
 make_user({struct, JanrainResult}) ->
-  {struct, Profile} = eduspider_web_lib:opt(JanrainResult, <<"profile">>),
-  Identifier        = eduspider_web_lib:opt(Profile, <<"identifier">>),
+  {struct, Profile} = eduspider_web_lib:lookup(<<"profile">>, JanrainResult),
+  Identifier        = eduspider_web_lib:lookup(<<"identifier">>, Profile),
   {ok, SpiderID}    = parse_identifier(Identifier),
   {ok, user_fe:create(SpiderID, Profile)}.
 
