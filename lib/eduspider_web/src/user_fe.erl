@@ -139,8 +139,8 @@ set_utcoffset(#user{} = User, UtcOffset) ->
 is_valid_session(User) ->
   LoginTime = get_login_time(User),
   Now       = timestamp_to_sec(now()),
-  Max       = eduspider_web_lib:max_user_session_age(),
-  (Now - LoginTime) =< Max.
+  MaxDays   = eduspider_web_lib:max_user_session_age(),
+  (Now - LoginTime) =< 3600 * 24 *  MaxDays.
 
 %%%_* Internal Functions ===============================================
 timestamp_to_sec(Timestamp) ->
