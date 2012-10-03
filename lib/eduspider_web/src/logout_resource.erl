@@ -23,9 +23,9 @@ allowed_methods(ReqData, State) ->
   {['POST'], ReqData, State}.
 
 process_post(ReqData, State) ->
-    %% TODO: remove auth from cookie here...
-    %% NewReqData = remove_auth(ReqData),
-    {true, ReqData, State}.
+  ct:pal("logout resource"),
+  NewReqData = eduspider_web_lib:remove_cookie(ReqData),
+  {true, NewReqData, State}.
 
 %%%_* Emacs ============================================================
 %%% Local Variables:

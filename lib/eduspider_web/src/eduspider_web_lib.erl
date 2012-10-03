@@ -9,17 +9,14 @@
 %%%_* Exports ==========================================================
 -export( [ %% fetch_fb_user_info/1
            fetch_resource/1
-         , get_cookie_secret/1
          , get_cookie_username/1
          , get_username/1
          , get_val/2
          , get_val/3
-         , has_good_cookies/1
          , http_request/3
-         , make_cookie_secret/1
-         , make_cookie_username/1
-         , make_secret/1
          , max_user_session_age/0
+         , remove_cookie/1
+         , save_cookie/2
          , oauth_redirect_uri/2
          , opt/2
          ]
@@ -69,7 +66,7 @@ get_cookie_username(RD) ->
 %% FIXME: what's the type of the webmachine request data?
 -spec get_username(term()) -> {ok, string()} | false.
 get_username(RD) ->
-  case eduspider_web_lib:has_good_cookies(RD) of
+  case has_good_cookies(RD) of
     true ->
       {ok, eduspider_web_lib:get_cookie_username(RD)};
     false ->
@@ -131,6 +128,22 @@ make_secret(Bin) ->
 
 max_user_session_age() ->
     eduspider_web:get_app_env( max_session_age, ?default_session_age).
+
+
+%% @doc remove the user information from the cookie @end
+%% FIXME: what is the type of the webmachine request data?
+-spec remove_cookie(term()) -> term().
+remove_cookie(RD0) ->
+  RD = wrq:remove_resp_header(?USERNAME, RD0),
+  wrq:remove_resp_header(?SECRET, RD).
+
+%% @doc save the user information into the cookie @end
+%% FIXME: what is the type of the webmachine request data?
+-spec save_cookie(user_fe:user(), term()) -> term().
+save_cookie(User, RD) ->
+  UsernameCookie = make_cookie_username(User),
+  SecretCookie   = make_cookie_secret(User),
+  wrq:merge_resp_headers([UsernameCookie, SecretCookie], RD).
 
 %% @doc get the value of a key from the proplist, crash
 %%      if not found

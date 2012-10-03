@@ -44,10 +44,8 @@ process_post(RD, Ctx) ->
   case httpc:request(Query) of
     {ok, {{_, 200, _}, _Headers, Body}} ->
       {ok, User} = make_user(mochijson2:decode(Body)),
-      Ctx1 = authorize(Ctx#ctx{user = User}),
-      UsernameCookie = eduspider_web_lib:make_cookie_username(User),
-      SecretCookie = eduspider_web_lib:make_cookie_secret(User),
-      NewRD  = wrq:merge_resp_headers([UsernameCookie, SecretCookie], RD),
+      Ctx1  = authorize(Ctx#ctx{user = User}),
+      NewRD = eduspider_web_lib:save_cookie(User, RD),
       { {halt, 303}
       , wrq:set_resp_header("Location", "/", NewRD)
       , Ctx1
