@@ -177,9 +177,9 @@ set_user_val_fun(_)                ->
       User
   end.
 
-set_user_name_val_fun(<<"givenName">>)  ->
+set_user_name_val_fun(<<"given_name">>)  ->
   fun set_given_name/2;
-set_user_name_val_fun(<<"familyName">>) ->
+set_user_name_val_fun(<<"family_name">>) ->
   fun set_family_name/2;
 set_user_name_val_fun(_)                ->
   fun(User, _) ->

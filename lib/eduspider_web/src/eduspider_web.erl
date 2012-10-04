@@ -28,6 +28,13 @@ stop()            ->
   stop_common(),
   Res.
 
+get_app_env(Env, Default) ->
+  case application:get_env(eduspider_web, Env) of
+    {ok, Val} -> Val;
+    undefined -> Default
+  end.
+
+%%%_* Internal Functions ===============================================
 dependent_applications() ->
   [ crypto
   , compiler
@@ -59,12 +66,6 @@ ensure_start(App) ->
     {error, {already_started, App}} -> ok;
     ok                              -> ok
   end.
-
-get_app_env(Env, Default) ->
-    case application:get_env(eduspider_web, Env) of
-        {ok, Val} -> Val;
-        undefined -> Default
-    end.
 
 %%%_* Emacs ============================================================
 %%% Local Variables:

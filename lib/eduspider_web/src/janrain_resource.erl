@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @doc Module that stores/fetches and manipulates the study material
+%%% @doc resource that handles the janrain token callback
 %%% @end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -62,6 +62,7 @@ process_post(RD, Ctx) ->
 finish_request(RD, Ctx) ->
   {true, RD, Ctx}.
 
+%%%_* Internal Functions ===============================================
 %% authorize a user
 authorize(#ctx{user = User} = Ctx) ->
   {ok, _} = user_fe:store(user_fe:set_login_time(User, now())),

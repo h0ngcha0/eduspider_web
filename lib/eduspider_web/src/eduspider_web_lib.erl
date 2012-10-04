@@ -28,6 +28,7 @@
 -define(SESSION_ID_HTTP_OPTIONS,  [{connect_timeout, 4000}]).
 -define(SESSION_ID_HTTP_TIMEOUT,  300000).
 
+%%%_* Code =============================================================
 %% get option (no default value)
 lookup(Key, OptList) ->
   case lists:keyfind(Key, 1, OptList) of
