@@ -33,8 +33,9 @@ get_username(UserId) ->
   case user_fe:fetch(UserId) of
     {error, notfound} ->
       false;
-    {ok, User}        ->
-      user_fe:get_email(User)
+    {ok, _oUser}        ->
+      %%user_fe:get_email(User)
+      UserId
   end.
 
 %%%_* Emacs ============================================================
