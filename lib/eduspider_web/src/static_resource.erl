@@ -31,6 +31,7 @@ resource_exists(RD, Ctx) ->
   Path = wrq:disp_path(RD),
   Rel  = filename:join([ P || P <- string:tokens(Path, "/"),
                               P /= ".."]),
+  ct:pal("Rel:~p", [Rel]),
   Abs  = filename:join([ code:priv_dir(eduspider_web)
                        , Ctx#ctx.docroot
                        , Rel]),
