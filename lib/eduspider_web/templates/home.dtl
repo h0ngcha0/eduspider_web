@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
   <head>
     <title>EduSpider</title>
 
@@ -6,7 +7,6 @@
     <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-responsive.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/prettify.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/eduspider.css" />
-
 
     <script type="text/javascript" src="/static/js/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/underscore.js"></script>
@@ -23,6 +23,12 @@
       });
     </script>
 
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
   </head>
 
   <body>
@@ -46,7 +52,7 @@
           {% else %}
           <!-- if the user has not logged in, show the sign in button -->
           <ul class="nav pull-right">
-            <li><a href="/login"><i class="icon-exclamation-sign icon-white"></i> Sign in</a>
+            <li><a href="#login"><i class="icon-exclamation-sign icon-white"></i> Sign in</a>
             </li>
           </ul>
           {% endif %}
